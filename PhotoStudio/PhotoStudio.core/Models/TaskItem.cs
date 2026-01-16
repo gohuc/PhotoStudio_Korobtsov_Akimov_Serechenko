@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskTracker.Core.Models;
+namespace PhotoStudio.Core.Models;
 
 public class TaskItem
 {
