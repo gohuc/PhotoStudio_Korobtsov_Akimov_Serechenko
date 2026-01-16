@@ -1,12 +1,13 @@
 ﻿using PhotoStudio.Core.Models;
+using PhotoStudio.Core.Services;
+using System.Threading.Tasks;
+var service = new TaskService();
 
-var tasks = new List<TaskItem>();
-var nextId = 1;
 
 while (true)
 {
     Console.WriteLine();
-    Console.WriteLine("TaskTracker v0.2");
+    Console.WriteLine("PhotoStudio v0.2");
     Console.WriteLine("----------------");
     Console.WriteLine("1) Добавить задачу");
     Console.WriteLine("2) Показать список задач");
@@ -31,26 +32,23 @@ while (true)
         if (string.IsNullOrWhiteSpace(title))
         {
             Console.WriteLine("Ошибка: название не может быть пустым.");
-            title = Console.ReadLine() ?? "";
             continue;
         }
 
-        var task = new TaskItem
+        try
         {
-            Id = nextId,
-            Title = title.Trim(),
-            Status = PhotoStudio.Core.Models.TaskStatus.New
-        };
-
-        nextId++;
-
-        tasks.Add(task);
-        Console.WriteLine($"Задача добавлена: #{task.Id} {task.Title} [{task.Status}]");
-        continue;
-    }
+            var task = service.Add(title);
+            Console.WriteLine($"Задача добавлена: #{task.Id} {task.Title} [{task.Status}]");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine("Ошибка: " + ex.Message);
+        }
+            }
 
     if (input == "2")
     {
+        var tasks = service.GetAll();
         if (tasks.Count == 0)
         {
             Console.WriteLine("Список задач пуст.");
@@ -64,6 +62,5 @@ while (true)
         }
         continue;
     }
-
     Console.WriteLine("Неизвестная команда. Введите 1, 2 или 0.");
 }
