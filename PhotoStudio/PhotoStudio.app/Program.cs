@@ -1,4 +1,4 @@
-﻿Console.WriteLine("TaskTracker v0.1");
+﻿Console.WriteLine("PhotoStudio v0.1");
 Console.WriteLine("----------------");
 Console.WriteLine("1) Добавить задачу (пока заглушка)");
 Console.WriteLine("2) Показать список задач (пока заглушка)");
